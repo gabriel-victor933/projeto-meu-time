@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import back from "../assets/41290.jpg"
 
 const Global = createGlobalStyle`
     
@@ -18,12 +19,18 @@ const Global = createGlobalStyle`
         --paragraph-size: 18px;
         --small-text-size: 14px;
 
+        --sm-width: 420px;
+
+    }
+    * {
+        box-sizing: border-box;
     }
 
     body {
         width: 100%;
         height: 100%;
-        background-color: var(--global-primary-color)
+        background-image: url(${back});
+        background-size: cover;
     }
 
     
