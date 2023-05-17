@@ -28,7 +28,7 @@ export default function Login(){
                 const {firstname, lastname} = res.data.response.account
                 localStorage.setItem("nome",`${firstname} ${lastname}`)
                 localStorage.setItem("key",inputRef.current)
-                navigate("/home")
+                navigate("/country")
 
             }
             setLoading(false)
@@ -44,7 +44,6 @@ export default function Login(){
     
     return (
         <>
-        <Back />
         <Block erro={erro ? "red": "black"}>
             <img src={img}/>
             <h1>Meu time</h1>
@@ -62,16 +61,7 @@ export default function Login(){
     )
 }
 
-const Back = styled.div`
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    background-color: var(--global-tertiary-color);
-    opacity: 0.2;
-`;
+
 
 const Block = styled.div`
     --size: 400px;
