@@ -7,10 +7,21 @@ export default function Country(){
 
     const teste = useContext(AppContext)
 
+    const config = {headers: {"x-apisports-key": localStorage.getItem("key")}}
+
+    function handleChange(e){
+
+        if(e.target.value.length >=3){
+            console.log(e.target.value)
+
+        }
+    }
+
     return (
         <Home>
             <Container>
-                <h2>Selecionar Pais {teste}</h2>
+                <h2>Selecionar Pais:</h2>
+                <input autoFocus onChange={handleChange}/>
             </Container>
         </Home>
     )
@@ -22,6 +33,12 @@ const Container = styled.div`
 
     h2 {
         font-size: var(--title-secondary-size)
+    }
+
+    input {
+        width: 100%;
+        height: 30px;
+        margin: 15px 0px;
     }
     
 `
