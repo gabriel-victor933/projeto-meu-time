@@ -6,11 +6,12 @@ function ContextProvider({children}){
 
     const countryRef = useRef(null)
     const leagueRef = useRef(null)
+    const teamRef = useRef(null)
 
     const config = {headers: {"x-apisports-key": localStorage.getItem("key")}}
 
     return (
-        <AppContext.Provider value={{countryRef, leagueRef, config}}>
+        <AppContext.Provider value={{countryRef, leagueRef, teamRef,config}}>
             {children}
         </AppContext.Provider>
     )

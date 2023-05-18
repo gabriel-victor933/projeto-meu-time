@@ -193,9 +193,8 @@ export default function League(){
     
 
     function handleClick(league){
-        console.log(league)
         leagueRef.current = league
-        navigate("/league")
+        navigate("/team")
     }
     
     return (

@@ -67,7 +67,6 @@ export default function Country(){
     }
 
     function handleClick(country){
-        console.log(country)
         countryRef.current = country
         navigate("/league")
     }
