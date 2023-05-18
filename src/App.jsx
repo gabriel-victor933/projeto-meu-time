@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Login from "./pages/Login"
 import Country from "./pages/Country"
+import League from "./pages/League"
 import styled from "styled-components"
 import { ContextProvider } from "./context/AppContext"
 
@@ -15,6 +16,7 @@ export default function App(){
         <Routes>
           <Route path="/" element={<Login />}/>
           <Route path="/country" element={<Country />}/>
+          <Route path="/league" element={<League />}/>
         </Routes>
       </BrowserRouter>
     </ContextProvider>

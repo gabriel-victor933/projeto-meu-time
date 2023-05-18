@@ -9,13 +9,13 @@ import { ThreeDots } from  'react-loader-spinner'
 
 export default function Country(){
 
-    const { countryRef } = useContext(AppContext)
+    const { countryRef, config } = useContext(AppContext)
     const navigate = useNavigate()
     const [countries,setCountries] = useState(null)
     const [loading, setLoading] = useState(false)
 
 
-    const config = {headers: {"x-apisports-key": localStorage.getItem("key")}}
+   
 
     useEffect(()=>{
         if(localStorage.getItem("key") == null){
@@ -54,6 +54,7 @@ export default function Country(){
               }
 
                 //passando data enquanto eu não posso fazer mais requisições.
+                //trocar para res.data....
                 setLoading(false)
                 setCountries(data.response)
             })
@@ -68,15 +69,15 @@ export default function Country(){
     function handleClick(country){
         console.log(country)
         countryRef.current = country
-        console.log(countryRef)
+        navigate("/league")
     }
 
     return (
         <Home>
             <Container>
                 <h2>Selecionar Pais:</h2>
-                <input autoFocus onChange={handleChange}/>
-                <div className="countries">
+                <input autoFocus onChange={handleChange} placeholder="exemplo: England"/>
+                <div className="options">
                     {loading && <ThreeDots height="50" width="70" radius="20" color="#212A3E"/>}
                     {!loading && countries?.map((c,i)=><div key={i} onClick={()=>handleClick(c)}><img src={c.flag}/><p>{c.name}</p></div>)}
                     {countries?.length === 0 && !loading && <h3>Nenhum pais encontrado</h3>}
@@ -100,7 +101,7 @@ const Container = styled.div`
         margin: 15px 0px;
     }
 
-    .countries {
+    .options {
         width: 100%;
         height: 400px;
         display: flex;
