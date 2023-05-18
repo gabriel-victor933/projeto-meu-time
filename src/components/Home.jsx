@@ -15,7 +15,6 @@ export default function Home({children}){
             </div>
             <div className="links">
                 <Link to="/country">País</Link>
-                <Link to="/country">Temporada</Link>
                 <Link to="/country">Liga</Link>
                 <Link to="/country">Time</Link>
                 <Link to="/country">infos</Link>

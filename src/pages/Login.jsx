@@ -39,8 +39,6 @@ export default function Login(){
             setLoading(false)
         })
     }
-
-    console.log(inputRef)
     
     return (
         <>

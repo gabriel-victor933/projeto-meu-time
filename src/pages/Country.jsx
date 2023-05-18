@@ -9,15 +9,13 @@ import { ThreeDots } from  'react-loader-spinner'
 
 export default function Country(){
 
-    const teste = useContext(AppContext)
+    const { countryRef } = useContext(AppContext)
     const navigate = useNavigate()
     const [countries,setCountries] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    const searchRef = useRef(null)
 
     const config = {headers: {"x-apisports-key": localStorage.getItem("key")}}
-    console.log(config)
 
     useEffect(()=>{
         if(localStorage.getItem("key") == null){
@@ -25,7 +23,7 @@ export default function Country(){
         }
     },[])
 
-    console.log(countries)
+    
 
     function handleChange(e){
 
@@ -35,9 +33,33 @@ export default function Country(){
             setLoading(true)
             axios.get(`https://v3.football.api-sports.io/countries`,config)
             .then((res)=>{
-            console.log(res);
-            setLoading(false)
-            setCountries(res.data.response)
+                const data = {
+                "get": "countries",
+                "parameters": {
+                  "name": "england"
+                },
+                "errors": [],
+                "results": 1,
+                "paging": {
+                  "current": 1,
+                  "total": 1
+                },
+                "response": [
+                  {
+                    "name": "England",
+                    "code": "GB",
+                    "flag": "https://media.api-sports.io/flags/gb.svg"
+                  }
+                ]
+              }
+
+                //passando data enquanto eu não posso fazer mais requisições.
+                setLoading(false)
+                setCountries(data.response)
+            })
+            .catch((err)=>{
+                alert(`${err.message} try again later.`)
+                setLoading(false)
             })
 
         }
@@ -45,6 +67,8 @@ export default function Country(){
 
     function handleClick(country){
         console.log(country)
+        countryRef.current = country
+        console.log(countryRef)
     }
 
     return (
@@ -54,7 +78,7 @@ export default function Country(){
                 <input autoFocus onChange={handleChange}/>
                 <div className="countries">
                     {loading && <ThreeDots height="50" width="70" radius="20" color="#212A3E"/>}
-                    {countries?.map((c,i)=><div key={i} onClick={()=>handleClick(c)}><img src={c.flag}/><p>{c.name}</p></div>)}
+                    {!loading && countries?.map((c,i)=><div key={i} onClick={()=>handleClick(c)}><img src={c.flag}/><p>{c.name}</p></div>)}
                     {countries?.length === 0 && !loading && <h3>Nenhum pais encontrado</h3>}
                 </div>
             </Container>
