@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import img from "../assets/football.png"
+import { Link } from "react-router-dom"
 
 export default function Home({children}){
 
@@ -11,6 +12,14 @@ export default function Home({children}){
                 <img src={img}/>
                 <h1>Meu Time</h1>
                 <p>Bem Vindo, {name} </p>
+            </div>
+            <div className="links">
+                <Link to="/country">País</Link>
+                <Link to="/country">Temporada</Link>
+                <Link to="/country">Liga</Link>
+                <Link to="/country">Time</Link>
+                <Link to="/country">infos</Link>
+
             </div>
             {children}
         </Main>
@@ -28,8 +37,20 @@ const Main = styled.main`
     top: 30px;
     left: calc(50% - 45%);
     z-index: 2;
+    
 
+    .links {
+        width: 100%;
+        height: 40px;
+        padding: 10px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
 
+        a {
+            margin: 15px;
+        }
+    }
 
     .header {
         width: 100%;

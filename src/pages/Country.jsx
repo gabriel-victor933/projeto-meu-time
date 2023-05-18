@@ -1,20 +1,50 @@
 import { styled } from "styled-components"
 import Home from "../components/Home"
 import { AppContext } from "../context/AppContext"
-import { useContext } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import { ThreeDots } from  'react-loader-spinner'
+
 
 export default function Country(){
 
     const teste = useContext(AppContext)
+    const navigate = useNavigate()
+    const [countries,setCountries] = useState(null)
+    const [loading, setLoading] = useState(false)
+
+    const searchRef = useRef(null)
 
     const config = {headers: {"x-apisports-key": localStorage.getItem("key")}}
+    console.log(config)
+
+    useEffect(()=>{
+        if(localStorage.getItem("key") == null){
+            navigate("/")
+        }
+    },[])
+
+    console.log(countries)
 
     function handleChange(e){
 
-        if(e.target.value.length >=3){
-            console.log(e.target.value)
+        const search = e.target.value
+        if(search.length >=3){
+
+            setLoading(true)
+            axios.get(`https://v3.football.api-sports.io/countries`,config)
+            .then((res)=>{
+            console.log(res);
+            setLoading(false)
+            setCountries(res.data.response)
+            })
 
         }
+    }
+
+    function handleClick(country){
+        console.log(country)
     }
 
     return (
@@ -22,6 +52,11 @@ export default function Country(){
             <Container>
                 <h2>Selecionar Pais:</h2>
                 <input autoFocus onChange={handleChange}/>
+                <div className="countries">
+                    {loading && <ThreeDots height="50" width="70" radius="20" color="#212A3E"/>}
+                    {countries?.map((c,i)=><div key={i} onClick={()=>handleClick(c)}><img src={c.flag}/><p>{c.name}</p></div>)}
+                    {countries?.length === 0 && !loading && <h3>Nenhum pais encontrado</h3>}
+                </div>
             </Container>
         </Home>
     )
@@ -39,6 +74,36 @@ const Container = styled.div`
         width: 100%;
         height: 30px;
         margin: 15px 0px;
+    }
+
+    .countries {
+        width: 100%;
+        height: 400px;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: auto;
+        padding-bottom: 60px;
+
+        h3 {
+            font-size: var(--title-quaternary-size);
+        }
+        
+        div {
+            width: 130px;
+            margin: 15px;
+
+            &:hover{
+                opacity: 0.5;
+            }
+
+            img {
+                width: 100%;
+            }
+
+            p {
+                font-size: var(--title-quartenary-size)
+            }
+        }
     }
     
 `
