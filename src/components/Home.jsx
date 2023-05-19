@@ -17,7 +17,7 @@ export default function Home({children}){
                 <Link to="/country">País</Link>
                 <Link to="/league">Liga</Link>
                 <Link to="/country">Time</Link>
-                <Link to="/country">infos</Link>
+                <Link to="/infos">infos</Link>
 
             </div>
             {children}

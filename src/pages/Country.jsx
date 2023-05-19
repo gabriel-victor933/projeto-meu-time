@@ -31,32 +31,21 @@ export default function Country(){
         if(search.length >=3){
 
             setLoading(true)
-            axios.get(`https://v3.football.api-sports.io/countries`,config)
+            axios.get(`https://v3.football.api-sports.io/countries?search=${search}`,config)
             .then((res)=>{
-                const data = {
-                "get": "countries",
-                "parameters": {
-                  "name": "england"
-                },
-                "errors": [],
-                "results": 1,
-                "paging": {
-                  "current": 1,
-                  "total": 1
-                },
-                "response": [
-                  {
-                    "name": "England",
-                    "code": "GB",
-                    "flag": "https://media.api-sports.io/flags/gb.svg"
-                  }
-                ]
-              }
+                
 
                 //passando data enquanto eu não posso fazer mais requisições.
                 //trocar para res.data....
                 setLoading(false)
-                setCountries(data.response)
+                //setCountries(res.data.response)
+                setCountries([
+                    {
+                    "name": "England",
+                    "code": "GB",
+                    "flag": "https://media.api-sports.io/flags/gb.svg"
+                    }
+                    ])
             })
             .catch((err)=>{
                 alert(`${err.message} try again later.`)

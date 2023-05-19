@@ -5,15 +5,14 @@ import { useContext, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { ThreeDots } from  'react-loader-spinner'
-import Select from 'react-select'
 
 
 export default function League(){
 
-    const { leagueRef, countryRef, config } = useContext(AppContext)
+    const { leagueRef, countryRef, config, seasonRef } = useContext(AppContext)
     const navigate = useNavigate()
     
-    const sessionRef = useRef(null)
+    
     const [inputError, setInputError] = useState(false)
 
     const [leagues,setLeagues] = useState(null)
@@ -32,156 +31,31 @@ export default function League(){
 
     function handleChange(e){
 
+        
         const search = e.target.value
-        if(sessionRef.current.length < 4){
+        if(search.length !== 4){
             setInputError(true)
             return;
         } else if(inputError){
             setInputError(false)
         } 
+        console.log(search)
 
-        if(search.length >=3){
+        if(search.length === 4){
 
             setLoading(true)
-            axios.get(`https://v3.football.api-sports.io/leagues?country=${countryRef.current}&season=${sessionRef.current}&search=${search}`,config)
+            axios.get(`https://v3.football.api-sports.io/leagues?country=${countryRef.current.name}&season=${search}`,config)
             .then((res)=>{
-                const data = {
-                    "get": "leagues",
-                    "parameters": {
-                      "id": "39"
-                    },
-                    "errors": [],
-                    "results": 1,
-                    "paging": {
-                      "current": 1,
-                      "total": 1
-                    },
-                    "response": [
-                      {
-                        "league": {
-                          "id": 39,
-                          "name": "Premier League",
-                          "type": "League",
-                          "logo": "https://media.api-sports.io/football/leagues/2.png"
-                        },
-                        "country": {
-                          "name": "England",
-                          "code": "GB",
-                          "flag": "https://media.api-sports.io/flags/gb.svg"
-                        },
-                        "seasons": [
-                          {
-                            "year": 2010,
-                            "start": "2010-08-14",
-                            "end": "2011-05-17",
-                            "current": false,
-                            "coverage": {
-                              "fixtures": {
-                                "events": true,
-                                "lineups": true,
-                                "statistics_fixtures": false,
-                                "statistics_players": false
-                              },
-                              "standings": true,
-                              "players": true,
-                              "top_scorers": true,
-                              "top_assists": true,
-                              "top_cards": true,
-                              "injuries": true,
-                              "predictions": true,
-                              "odds": false
-                            }
-                          },
-                          {
-                            "year": 2011,
-                            "start": "2011-08-13",
-                            "end": "2012-05-13",
-                            "current": false,
-                            "coverage": {
-                              "fixtures": {
-                                "events": true,
-                                "lineups": true,
-                                "statistics_fixtures": false,
-                                "statistics_players": false
-                              },
-                              "standings": true,
-                              "players": true,
-                              "top_scorers": true,
-                              "top_assists": true,
-                              "top_cards": true,
-                              "injuries": true,
-                              "predictions": true,
-                              "odds": false
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "league": {
-                          "id": 39,
-                          "name": "Europe League",
-                          "type": "League",
-                          "logo": "https://media.api-sports.io/football/leagues/3.png"
-                        },
-                        "country": {
-                          "name": "England",
-                          "code": "GB",
-                          "flag": "https://media.api-sports.io/flags/gb.svg"
-                        },
-                        "seasons": [
-                          {
-                            "year": 2010,
-                            "start": "2010-08-14",
-                            "end": "2011-05-17",
-                            "current": false,
-                            "coverage": {
-                              "fixtures": {
-                                "events": true,
-                                "lineups": true,
-                                "statistics_fixtures": false,
-                                "statistics_players": false
-                              },
-                              "standings": true,
-                              "players": true,
-                              "top_scorers": true,
-                              "top_assists": true,
-                              "top_cards": true,
-                              "injuries": true,
-                              "predictions": true,
-                              "odds": false
-                            }
-                          },
-                          {
-                            "year": 2011,
-                            "start": "2011-08-13",
-                            "end": "2012-05-13",
-                            "current": false,
-                            "coverage": {
-                              "fixtures": {
-                                "events": true,
-                                "lineups": true,
-                                "statistics_fixtures": false,
-                                "statistics_players": false
-                              },
-                              "standings": true,
-                              "players": true,
-                              "top_scorers": true,
-                              "top_assists": true,
-                              "top_cards": true,
-                              "injuries": true,
-                              "predictions": true,
-                              "odds": false
-                            }
-                          }
-                        ]
-                      }
-                    ]
-                  }
-
-                //passando data enquanto eu não posso fazer mais requisições.
-                //trocar para res.data....
                 setLoading(false)
-                setLeagues(data.response.map((r)=> r.league))
+                console.log(res.data.response)
+                //setLeagues(res.data.response.map((r)=> r.league))
+                setLeagues([{
+                  "id": 39,
+                  "name": "Premier League",
+                  "type": "League",
+                  "logo": "https://media.api-sports.io/football/leagues/2.png"
+                  }])
+                seasonRef.current = search
             })
             .catch((err)=>{
                 alert(`${err.message} try again later.`)
@@ -196,15 +70,16 @@ export default function League(){
         leagueRef.current = league
         navigate("/team")
     }
+
+    
     
     return (
         <Home>
             <Container>
                 <h2>Selecionar Temporada:</h2>
-                <input autoFocus type="number" placeholder="exemplo: 2014" required pattern="[0-9]{4}" onChange={(e)=>sessionRef.current = e.target.value} />
+                <input autoFocus type="number" placeholder="exemplo: 2014" required pattern="[0-9]{4}" onChange={handleChange} />
                 {inputError && <small>Temporada deve ter 4 digítos!</small>}
                 <h2>Selecionar Liga:</h2>
-                <input autoFocus type="text" placeholder="exemplo: Premier League" onChange={handleChange}/>
                 <div className="options">
                     {loading && <ThreeDots height="50" width="70" radius="20" color="#212A3E"/>}
                     {!loading && leagues?.map((c,i)=><div key={i} onClick={()=>handleClick(c)}><img src={c.logo}/><p>{c.name}</p></div>)}
@@ -245,6 +120,7 @@ const Container = styled.div`
 
         h3 {
             font-size: var(--title-quaternary-size);
+            margin-top: 15px;
         }
         
         div {
