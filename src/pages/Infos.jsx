@@ -1,9 +1,10 @@
-import { useEffect, useState, useContext } from "react"
+import { useEffect, useState, useContext, useMemo } from "react"
 import styled from "styled-components"
 import { AppContext } from "../context/AppContext"
 import Home from "../components/Home"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import Table from "../components/Table"
 
 export default function Infos(){
 
@@ -69,8 +70,79 @@ export default function Infos(){
         }) */
     }
 
-
-    console.log(jogadores)
+    const columns = [
+        {
+            Header: "Partidas Jogadas",
+            columns: [
+                
+                {
+                    Header: "casa",
+                    accessor: "played.home"
+                },
+                {
+                    Header: "fora",
+                    accessor: "played.away"
+                },
+                {
+                    Header: "total",
+                    accessor: "played.total"
+                }
+            ]
+        },
+        {
+            Header: "Vitórias",
+            columns: [
+                
+                {
+                    Header: "casa",
+                    accessor: "wins.home"
+                },
+                {
+                    Header: "fora",
+                    accessor: "wins.away"
+                },
+                {
+                    Header: "total",
+                    accessor: "wins.total"
+                }
+            ]
+        },{
+            Header: "Derrotas",
+            columns: [
+                
+                {
+                    Header: "casa",
+                    accessor: "loses.home"
+                },
+                {
+                    Header: "fora",
+                    accessor: "loses.away"
+                },
+                {
+                    Header: "total",
+                    accessor: "loses.total"
+                }
+            ]
+        },{
+            Header: "Empates",
+            columns: [
+                
+                {
+                    Header: "casa",
+                    accessor: "draws.home"
+                },
+                {
+                    Header: "fora",
+                    accessor: "draws.away"
+                },
+                {
+                    Header: "total",
+                    accessor: "draws.total"
+                }
+            ]
+        }
+    ]
+    
 
     return (
         <Home>
@@ -82,6 +154,16 @@ export default function Infos(){
                {!loading && jogadores?.map((c,i)=><div key={i}><img src={c.photo}/><p>{c.name}</p><small>{c.birth.country}</small></div>)}
                 {jogadores?.length === 0 && !loading && <h3>Nenhum liga encontrada</h3>}  
             </div>
+            <h2>formações:</h2>
+            {lineups?.map((line,i) => {
+            return (<div className="formation" key={i}> 
+                <p>formação: {line.formation}</p>
+                <p>N° partidas: {line.played}</p>
+            </div>)
+        })}
+        <h2>Resultados:</h2>
+
+        {Object.keys(fixtures).length !== 0  && <Table fixtures={fixtures} columns={columns}/>}
         </Container>
     </Home>
     )
@@ -90,10 +172,12 @@ export default function Infos(){
 const Container = styled.div`
 
     padding: 10px;
+    
+    
 
     h2 {
         font-size: var(--title-secondary-size);
-        margin-top: 15px;
+        margin-top: 20px;
     }
 
     input {
@@ -113,7 +197,8 @@ const Container = styled.div`
         display: flex;
         flex-wrap: wrap;
         overflow: auto;
-        padding-bottom: 60px;
+        margin-bottom: 30px;
+        
 
         h3 {
             font-size: var(--title-quaternary-size);
@@ -137,9 +222,19 @@ const Container = styled.div`
         }
     }
 
+    .formation {
+        display: flex;
+        width: 100%;
+        
+        
+        p {
+            margin: 15px;
+            font-size: var(--title-quartenary-size)
+        }
+
+    }
+
 `
-
-
 
 const fixturesEx = {
     "played": {

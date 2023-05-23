@@ -54,7 +54,7 @@ export default function League(){
                   "name": "Premier League",
                   "type": "League",
                   "logo": "https://media.api-sports.io/football/leagues/2.png"
-                  }])
+                  }]) 
                 seasonRef.current = search
             })
             .catch((err)=>{

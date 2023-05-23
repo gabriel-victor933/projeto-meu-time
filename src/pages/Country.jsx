@@ -45,7 +45,7 @@ export default function Country(){
                     "code": "GB",
                     "flag": "https://media.api-sports.io/flags/gb.svg"
                     }
-                    ])
+                    ]) 
             })
             .catch((err)=>{
                 alert(`${err.message} try again later.`)

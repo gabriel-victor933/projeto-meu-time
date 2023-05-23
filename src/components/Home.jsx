@@ -31,10 +31,7 @@ const Main = styled.main`
     background-color: var(--global-primary-color);
     border: solid 1px var(--global-tertiary-color);
     border-radius: 30px;
-    padding: 0;
-    position: fixed;
-    top: 30px;
-    left: calc(50% - 45%);
+    margin: 50px auto;
     z-index: 2;
     
 

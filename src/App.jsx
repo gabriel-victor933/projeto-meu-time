@@ -13,7 +13,7 @@ export default function App(){
   return (
     <>
     <ContextProvider>
-      <Back />
+      
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />}/>
@@ -30,13 +30,3 @@ export default function App(){
 
 
 
-const Back = styled.div`
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    background-color: var(--global-tertiary-color);
-    opacity: 0.2;
-`;
