@@ -5,6 +5,7 @@ import Home from "../components/Home"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Table from "../components/Table"
+import Charts from "../components/Chart"
 
 export default function Infos(){
 
@@ -12,6 +13,7 @@ export default function Infos(){
     const [loading,setLoading] = useState(false)
     const [lineups, setLineups] = useState([])
     const [fixtures, setFixtures] = useState({})
+    const [statistics, setStatistics] = useState([])
     const navigate = useNavigate()
 
     const {countryRef, leagueRef, teamRef, seasonRef,config} = useContext(AppContext)
@@ -56,6 +58,9 @@ export default function Infos(){
          
         setLineups(lineupsEx)
         setFixtures(fixturesEx)
+        setStatistics(statisticEx)
+        console.log(`https://v3.football.api-sports.io/teams/statistics?season=${seasonRef.current}&
+        team=${teamRef.current.id}&league=${leagueRef.current.id}`)
          /* axios.get(`https://v3.football.api-sports.io/teams/statistics?season=${seasonRef.current}&
          team=${teamRef.current.id}&league=${leagueRef.current.id}`,config)
         .then((res)=>{
@@ -63,6 +68,7 @@ export default function Infos(){
             console.log(res)
             setLineups(res.data.response.lineups)
             setJogadores(res.data.response.fixtures)
+            setStatistics(res.data.response.goals.for.minute)
         })
         .catch((err)=>{
             alert(`${err.message} try again later.`)
@@ -164,6 +170,8 @@ export default function Infos(){
         <h2>Resultados:</h2>
 
         {Object.keys(fixtures).length !== 0  && <Table fixtures={fixtures} columns={columns}/>}
+        <h2>Gols marcados por tempo de jogo:</h2>
+        <Charts statistics={statistics}/>
         </Container>
     </Home>
     )
@@ -177,7 +185,7 @@ const Container = styled.div`
 
     h2 {
         font-size: var(--title-secondary-size);
-        margin-top: 20px;
+        margin-top: 30px;
     }
 
     input {
@@ -2180,3 +2188,38 @@ const playersEx = [
         ]
     }
 ]
+
+const statisticEx = {
+    "0-15": {
+      "total": 10,
+      "percentage": "13.70%"
+    },
+    "16-30": {
+      "total": 9,
+      "percentage": "12.33%"
+    },
+    "31-45": {
+      "total": 14,
+      "percentage": "19.18%"
+    },
+    "46-60": {
+      "total": 8,
+      "percentage": "10.96%"
+    },
+    "61-75": {
+      "total": 14,
+      "percentage": "19.18%"
+    },
+    "76-90": {
+      "total": 16,
+      "percentage": "21.92%"
+    },
+    "91-105": {
+      "total": 2,
+      "percentage": "2.74%"
+    },
+    "106-120": {
+      "total": null,
+      "percentage": null
+    }
+}
