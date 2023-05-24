@@ -3,6 +3,8 @@ import { useTable } from "react-table"
 import { styled } from "styled-components";
 
 export default function Table({fixtures, columns}){
+  console.log(fixtures)
+  if(Object.keys(fixtures).length === 0 ) return (<div>sem informações.</div>)
     
     const tableInstance = useTable({ columns, data:[fixtures] })
      const {
@@ -49,10 +51,10 @@ const TableContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
-    margin: 30px;
+    margin: 20px 0px;
     
     table {
-  width: 80%;
+  width: 90%;
   border-collapse: collapse;
 
 }

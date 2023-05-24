@@ -39,7 +39,7 @@ export default function League(){
         } else if(inputError){
             setInputError(false)
         } 
-        console.log(search)
+        
 
         if(search.length === 4){
 
@@ -47,14 +47,9 @@ export default function League(){
             axios.get(`https://v3.football.api-sports.io/leagues?country=${countryRef.current.name}&season=${search}`,config)
             .then((res)=>{
                 setLoading(false)
-                console.log(res.data.response)
-                //setLeagues(res.data.response.map((r)=> r.league))
-                setLeagues([{
-                  "id": 39,
-                  "name": "Premier League",
-                  "type": "League",
-                  "logo": "https://media.api-sports.io/football/leagues/2.png"
-                  }]) 
+                
+                setLeagues(res.data.response.map((r)=> r.league))
+
                 seasonRef.current = search
             })
             .catch((err)=>{

@@ -33,28 +33,20 @@ export default function Team(){
 
     function getTeams(){
         setLoading(true)
-        setteams([{
-            "id": 33,
-            "name": "Manchester United",
-            "code": "MUN",
-            "country": "England",
-            "founded": 1878,
-            "national": false,
-            "logo": "https://media.api-sports.io/football/teams/33.png"
-            }]) 
+        
             setLoading(false)
-        /* axios.get(`https://v3.football.api-sports.io/teams?country=${countryRef.current.name}&season=${seasonRef.current}&league=${leagueRef.current.id}`,config)
+        axios.get(`https://v3.football.api-sports.io/teams?country=${countryRef.current.name}&season=${seasonRef.current}&league=${leagueRef.current.id}`,config)
         .then((res)=>{
             
             setLoading(false)
-            console.log(res.data)
-            //setteams(res.data.response.map((r)=> r.team))
+            
+            setteams(res.data.response.map((r)=> r.team))
             
         })
         .catch((err)=>{
             alert(`${err.message} try again later.`)
             setLoading(false)
-        }) */
+        })
     }
        
 

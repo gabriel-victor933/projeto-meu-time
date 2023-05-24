@@ -33,19 +33,10 @@ export default function Country(){
             setLoading(true)
             axios.get(`https://v3.football.api-sports.io/countries?search=${search}`,config)
             .then((res)=>{
-                
 
-                //passando data enquanto eu não posso fazer mais requisições.
-                //trocar para res.data....
                 setLoading(false)
-                //setCountries(res.data.response)
-                setCountries([
-                    {
-                    "name": "England",
-                    "code": "GB",
-                    "flag": "https://media.api-sports.io/flags/gb.svg"
-                    }
-                    ]) 
+                setCountries(res.data.response)
+
             })
             .catch((err)=>{
                 alert(`${err.message} try again later.`)
