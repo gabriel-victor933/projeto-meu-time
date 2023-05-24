@@ -44,7 +44,7 @@ export default function League(){
         if(search.length === 4){
 
             setLoading(true)
-            axios.get(`https://v3.football.api-sports.io/leagues?country=${countryRef.current.name}&season=${search}`,config)
+            axios.get(`${import.meta.env.VITE_APP_API_URL}/leagues?country=${countryRef.current.name}&season=${search}`,config)
             .then((res)=>{
                 setLoading(false)
                 

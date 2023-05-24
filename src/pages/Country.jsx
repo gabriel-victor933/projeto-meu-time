@@ -31,7 +31,7 @@ export default function Country(){
         if(search.length >=3){
 
             setLoading(true)
-            axios.get(`https://v3.football.api-sports.io/countries?search=${search}`,config)
+            axios.get(`${import.meta.env.VITE_APP_API_URL}/countries?search=${search}`,config)
             .then((res)=>{
 
                 setLoading(false)

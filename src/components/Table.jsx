@@ -3,7 +3,6 @@ import { useTable } from "react-table"
 import { styled } from "styled-components";
 
 export default function Table({fixtures, columns}){
-  console.log(fixtures)
   if(Object.keys(fixtures).length === 0 ) return (<div>sem informações.</div>)
     
     const tableInstance = useTable({ columns, data:[fixtures] })

@@ -40,7 +40,7 @@ export default function Infos(){
 
     function getPlayers(){
 
-        axios.get(`https://v3.football.api-sports.io/players?
+        axios.get(`${import.meta.env.VITE_APP_API_URL}/players?
         team=${teamRef.current.id}&league=${leagueRef.current.id}&season=${seasonRef.current}`,config)
         .then((res)=>{
             
@@ -56,7 +56,7 @@ export default function Infos(){
 
         setLoadInfos(true)
 
-         axios.get(`https://v3.football.api-sports.io/teams/statistics?season=${seasonRef.current}&
+         axios.get(`${import.meta.env.VITE_APP_API_URL}/teams/statistics?season=${seasonRef.current}&
          team=${teamRef.current.id}&league=${leagueRef.current.id}`,config)
         .then((res)=>{
             
@@ -144,7 +144,6 @@ export default function Infos(){
         }
     ]
     
-    console.log(lineups)
     return (
         <Home>
         <Container>

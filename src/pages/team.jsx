@@ -18,7 +18,6 @@ export default function Team(){
 
 
     useEffect(()=>{
-        console.log(leagueRef,countryRef,seasonRef)
         if(localStorage.getItem("key") == null){
             navigate("/")
         } else if(countryRef.current == null){
@@ -35,7 +34,7 @@ export default function Team(){
         setLoading(true)
         
             setLoading(false)
-        axios.get(`https://v3.football.api-sports.io/teams?country=${countryRef.current.name}&season=${seasonRef.current}&league=${leagueRef.current.id}`,config)
+        axios.get(`${import.meta.env.VITE_APP_API_URL}/teams?country=${countryRef.current.name}&season=${seasonRef.current}&league=${leagueRef.current.id}`,config)
         .then((res)=>{
             
             setLoading(false)

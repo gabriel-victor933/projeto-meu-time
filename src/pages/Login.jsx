@@ -14,13 +14,14 @@ export default function Login(){
     const inputRef = useRef("")
     const navigate = useNavigate()
 
+
     function handleSubmit(e){
         e.preventDefault()
         setLoading(true)
         setErro(false)
         const config = {headers: {"x-apisports-key": inputRef.current}}
 
-        axios.get("https://v3.football.api-sports.io/status",config)
+        axios.get(`${import.meta.env.VITE_APP_API_URL}/status`,config)
         .then((res)=>{
             if(res.data.errors.length != 0){
                 setErro(true)
