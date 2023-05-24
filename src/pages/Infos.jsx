@@ -152,7 +152,7 @@ export default function Infos(){
             <div className="options">
                 {loading && <ThreeDots height="50" width="70" radius="20" color="#212A3E"/>}
                {!loading && jogadores?.map((c,i)=><div key={i}><img src={c.photo}/><p>{c.name}</p><small>{c.birth.country}</small></div>)}
-                {jogadores?.length === 0 && !loading && <h3>Nenhum liga encontrada</h3>}  
+                {jogadores?.length === 0 && !loading && <h3>Nenhum Jogador encontrada</h3>}  
             </div>
             <h2>formações:</h2>
             {lineups.length === 0 ? <p>sem informações.</p>: lineups?.map((line,i) => {
